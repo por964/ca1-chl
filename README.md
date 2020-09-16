@@ -1,4 +1,4 @@
-Credentials changed
+Tests added
 
 [![Build Status](https://travis-ci.org/por964/ca1-chl.svg?branch=master)](https://travis-ci.org/por964/ca1-chl)
 
