@@ -1,21 +1,14 @@
 package facades;
 
 import dtos.JokeDTO;
-import dtos.MemberDTO;
 import entities.Joke;
-import entities.Member;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 import utils.EMF_Creator;
 
-/**
- *
- * Rename Class to a relevant name Add add relevant facade methods
- */
 public class JokeFacade {
 
     private static JokeFacade instance;
@@ -30,7 +23,7 @@ public class JokeFacade {
      * @param _emf
      * @return an instance of this facade class.
      */
-    public static JokeFacade getFacadeExample(EntityManagerFactory _emf) {
+    public static JokeFacade getJokeFacade(EntityManagerFactory _emf) {
         if (instance == null) {
             emf = _emf;
             instance = new JokeFacade();

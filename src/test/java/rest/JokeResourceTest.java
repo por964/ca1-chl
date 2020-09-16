@@ -1,6 +1,6 @@
 package rest;
 
-import entities.Member;
+import entities.Joke;
 import utils.EMF_Creator;
 import io.restassured.RestAssured;
 import static io.restassured.RestAssured.given;
@@ -18,14 +18,15 @@ import static org.hamcrest.CoreMatchers.hasItems;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 //Uncomment the line below, to temporarily disable this test
-//@Disabled
-public class MemberResourceTest {
+@Disabled
+public class JokeResourceTest {
 
     private static final int SERVER_PORT = 7777;
     private static final String SERVER_URL = "http://localhost/api";
-    private static Member m1,m2;
+    private static Joke j1,j2;
     
     static final URI BASE_URI = UriBuilder.fromUri(SERVER_URL).port(SERVER_PORT).build();
     private static HttpServer httpServer;
@@ -63,13 +64,13 @@ public class MemberResourceTest {
     @BeforeEach
     public void setUp() {
         EntityManager em = emf.createEntityManager();
-        m1 = new Member("George Bush","cph-gb101",76);
-        m2 = new Member("Barack Obama","cph-bo202",58);
+        j1 = new Joke("How is Christmas like your job? You do all the work and the fat guy in the suit gets all the credit.", "Office");
+        j2 = new Joke("Yo momma is so fat, when she sat on an iPod, she made the iPad!", "Technology");
         try {
             em.getTransaction().begin();
             em.createNamedQuery("Member.deleteAllRows").executeUpdate();
-            em.persist(m1);
-            em.persist(m2); 
+            em.persist(j1);
+            em.persist(j2); 
             em.getTransaction().commit();
         } finally { 
             em.close();
@@ -79,11 +80,7 @@ public class MemberResourceTest {
     @Test
     public void testServerIsUp() {
         System.out.println("Testing is server UP");
-        given()
-                .when()
-                .get("/members")
-                .then()
-                .statusCode(200);
+        given().when().get("/jokes").then().statusCode(200);
     }
 
 @Test
@@ -92,13 +89,13 @@ public class MemberResourceTest {
         //Gherkin Syntax
         given().
                 when().
-                get("/members").
+                get("/jokes").
                 then().
                 statusCode(200);
         //Hamcrest matcher
         given().
                 when().
-                get("/members").
+                get("/jokes").
                 then().assertThat().
                 statusCode(200);
     }
@@ -106,22 +103,22 @@ public class MemberResourceTest {
     public void testGetAll() {
         given()
                 .when().
-                get("/members")
+                get("/jokes")
                 .then().
                 assertThat()
                 .body("size()", equalTo(2))
-                .body("name",
-                        hasItems("George Bush",
-                                "Barack Obama"));
+                .body("type",
+                        hasItems("Office",
+                                "Technology"));
     }
 
 
     @Test
     public void contentType() {
         //Gherkin Syntax
-        given().when().get("/members").then().contentType(ContentType.JSON);
+        given().when().get("/jokes").then().contentType(ContentType.JSON);
         //Hamcrest matcher
-        given().when().get("/members").then().assertThat().contentType(ContentType.JSON);
+        given().when().get("/jokes").then().assertThat().contentType(ContentType.JSON);
     }
 
 

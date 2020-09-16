@@ -10,7 +10,7 @@ import javax.ws.rs.core.MediaType;
 /**
  * REST Test Web Service
  *
- * @author lam
+ * @author Claes
  */
 @Path("test")
 public class TestResource {
