@@ -1,36 +1,41 @@
-/*
+
 package facades;
 
 import utils.EMF_Creator;
 import entities.Car;
+import dtos.CarDTO;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.hasSize;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 //Uncomment the line below, to temporarily disable this test
-//@Disabled
-public class FacadeExampleTest {
+@Disabled
+public class CarFacadeTest {
 
     private static EntityManagerFactory emf;
-    private static FacadeExample facade;
+    private static CarFacade facade;
 
-    public FacadeExampleTest() {
+    public CarFacadeTest() {
     }
 
     @BeforeAll
     public static void setUpClass() {
        emf = EMF_Creator.createEntityManagerFactoryForTest();
-       facade = FacadeExample.getFacadeExample(emf);
+       facade = CarFacade.getCarFacade(emf);
     }
 
     @AfterAll
     public static void tearDownClass() {
-//        Clean up database after test is done or use a persistence unit with drop-and-create to start up clean on every test
+    //Clean up database after test is done or use a persistence unit with drop-and-create to start up clean on every test
     }
 
     // Setup the DataBase in a known state BEFORE EACH TEST
@@ -40,9 +45,10 @@ public class FacadeExampleTest {
         EntityManager em = emf.createEntityManager();
         try {
             em.getTransaction().begin();
-            em.createNamedQuery("RenameMe.deleteAllRows").executeUpdate();
-            em.persist(new RenameMe("Some txt", "More text"));
-            em.persist(new RenameMe("aaa", "bbb"));
+            em.createNamedQuery("Car.deleteAllRows").executeUpdate();
+            em.persist(new Car(2000, "Ford", "Focus", 180000));
+            em.persist(new Car(2005, "VW", "Passat",350000));
+            em.persist(new Car(2010, "Volvo", "XC60",575000));
 
             em.getTransaction().commit();
         } finally {
@@ -55,11 +61,11 @@ public class FacadeExampleTest {
 //        Remove any data after each test was run
     }
 
-    // TODO: Delete or change this method 
+
     @Test
     public void testAFacadeMethod() {
-        assertEquals(2, facade.getRenameMeCount(), "Expects two rows in the database");
+        List<CarDTO> cars = facade.getAllCars();
+        assertThat(cars,hasSize(3));
     }
 
 }
-*/

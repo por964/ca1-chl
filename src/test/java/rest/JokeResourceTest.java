@@ -22,15 +22,17 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 //Uncomment the line below, to temporarily disable this test
 @Disabled
+
 public class JokeResourceTest {
 
     private static final int SERVER_PORT = 7777;
     private static final String SERVER_URL = "http://localhost/api";
-    private static Joke j1,j2;
-    
     static final URI BASE_URI = UriBuilder.fromUri(SERVER_URL).port(SERVER_PORT).build();
     private static HttpServer httpServer;
     private static EntityManagerFactory emf;
+
+    private Joke j1;
+    private Joke j2;
 
     static HttpServer startServer() {
         ResourceConfig rc = ResourceConfig.forApplication(new ApplicationConfig());
@@ -42,23 +44,23 @@ public class JokeResourceTest {
         //This method must be called before you request the EntityManagerFactory
         EMF_Creator.startREST_TestWithDB();
         emf = EMF_Creator.createEntityManagerFactoryForTest();
-        
+
         httpServer = startServer();
         //Setup RestAssured
         RestAssured.baseURI = SERVER_URL;
         RestAssured.port = SERVER_PORT;
         RestAssured.defaultParser = Parser.JSON;
     }
-    
+
     @AfterAll
-    public static void closeTestServer(){
+    public static void closeTestServer() {
         //System.in.read();
-         //Don't forget this, if you called its counterpart in @BeforeAll
-         EMF_Creator.endREST_TestWithDB();
-         httpServer.shutdownNow();
+        httpServer.shutdownNow();
+        //Don't forget this, if you called its counterpart in @BeforeAll
+        EMF_Creator.endREST_TestWithDB();
+
     }
 
-    
     // Setup the DataBase (used by the test-server and this test) in a known state BEFORE EACH TEST
     //TODO -- Make sure to change the EntityClass used below to use YOUR OWN (renamed) Entity class
     @BeforeEach
@@ -68,22 +70,26 @@ public class JokeResourceTest {
         j2 = new Joke("Yo momma is so fat, when she sat on an iPod, she made the iPad!", "Technology");
         try {
             em.getTransaction().begin();
-            em.createNamedQuery("Member.deleteAllRows").executeUpdate();
+            em.createNamedQuery("Joke.deleteAllRows").executeUpdate();
             em.persist(j1);
-            em.persist(j2); 
+            em.persist(j2);
             em.getTransaction().commit();
-        } finally { 
+        } finally {
             em.close();
         }
     }
-    
     @Test
     public void testServerIsUp() {
         System.out.println("Testing is server UP");
-        given().when().get("/jokes").then().statusCode(200);
+        given()
+                .when()
+                .get("/jokes")
+                .then()
+                .statusCode(200);
     }
+    
 
-@Test
+    @Test
     public void serverIsRunning() {
         System.out.println("Testing is server UP");
         //Gherkin Syntax
@@ -99,7 +105,9 @@ public class JokeResourceTest {
                 then().assertThat().
                 statusCode(200);
     }
-@Test
+    
+
+    @Test
     public void testGetAll() {
         given()
                 .when().
@@ -112,6 +120,12 @@ public class JokeResourceTest {
                                 "Technology"));
     }
 
+    @Test
+    public void demonStrateLogging() {
+
+        given().log().all().when().get("/jokes").then().log().body();
+
+    }
 
     @Test
     public void contentType() {
@@ -121,6 +135,4 @@ public class JokeResourceTest {
         given().when().get("/jokes").then().assertThat().contentType(ContentType.JSON);
     }
 
-
 }
-

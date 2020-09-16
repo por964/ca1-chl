@@ -30,7 +30,7 @@ public class CarFacade {
      * @param _emf
      * @return an instance of this facade class.
      */
-    public static CarFacade getFacadeExample(EntityManagerFactory _emf) {
+    public static CarFacade getCarFacade(EntityManagerFactory _emf) {
         if (instance == null) {
             emf = _emf;
             instance = new CarFacade();

@@ -1,4 +1,3 @@
-
 package facades;
 
 import utils.EMF_Creator;
@@ -29,13 +28,13 @@ public class MemberFacadeTest {
 
     @BeforeAll
     public static void setUpClass() {
-       emf = EMF_Creator.createEntityManagerFactoryForTest();
-       facade = MemberFacade.getMemberFacade(emf);
+        emf = EMF_Creator.createEntityManagerFactoryForTest();
+        facade = MemberFacade.getMemberFacade(emf);
     }
 
     @AfterAll
     public static void tearDownClass() {
-//        Clean up database after test is done or use a persistence unit with drop-and-create to start up clean on every test
+    //Clean up database after test is done or use a persistence unit with drop-and-create to start up clean on every test
     }
 
     // Setup the DataBase in a known state BEFORE EACH TEST
@@ -46,8 +45,8 @@ public class MemberFacadeTest {
         try {
             em.getTransaction().begin();
             em.createNamedQuery("Member.deleteAllRows").executeUpdate();
-            em.persist(new Member("Lars Thomsen", "cph-lt101",35));
-            em.persist(new Member("Ib Nilsen", "cph-in202",45));
+            em.persist(new Member("Lars Thomsen", "cph-lt101", 35));
+            em.persist(new Member("Ib Nilsen", "cph-in202", 45));
 
             em.getTransaction().commit();
         } finally {
@@ -64,7 +63,7 @@ public class MemberFacadeTest {
     @Test
     public void testGetAllMembers() {
         List<MemberDTO> members = facade.getAllMembers();
-        assertThat(members,hasSize(2));
+        assertThat(members, hasSize(2));
     }
 
 }

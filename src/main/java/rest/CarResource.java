@@ -20,7 +20,7 @@ public class CarResource {
     //An alternative way to get the EntityManagerFactory, whithout having to type the details all over the code
     //EMF = EMF_Creator.createEntityManagerFactory(DbSelector.DEV, Strategy.CREATE);
     
-    private static final CarFacade FACADE =  CarFacade.getFacadeExample(EMF);
+    private static final CarFacade FACADE =  CarFacade.getCarFacade(EMF);
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
             
     @GET
