@@ -1,15 +1,18 @@
 package entities;
 
 import java.io.Serializable;
+import java.util.Date;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
+import javax.persistence.Temporal;
 
 /**
  *
- * @author 45222
+ * @author Claes
  */
 @Entity
 @NamedQuery(name = "Car.deleteAllRows", query = "DELETE from Car")
@@ -17,12 +20,18 @@ public class Car implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private int year;
+    @Column
     private String make;
     private String model;
     private int price;
+    
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date created;
+    
+    private String createdByUser;
 
     public Car() {
     }
@@ -33,6 +42,9 @@ public class Car implements Serializable {
         this.make = make;
         this.model = model;
         this.price = price;
+        
+        this.createdByUser = "Claes Lindholm";
+        this.created = new Date();
     }
 
     public int getYear() {

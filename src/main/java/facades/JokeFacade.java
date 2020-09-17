@@ -1,14 +1,21 @@
 package facades;
 
 import dtos.JokeDTO;
+import dtos.MemberDTO;
 import entities.Joke;
+import entities.Member;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 import utils.EMF_Creator;
 
+/**
+ *
+ * Rename Class to a relevant name Add add relevant facade methods
+ */
 public class JokeFacade {
 
     private static JokeFacade instance;

@@ -21,7 +21,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 //Uncomment the line below, to temporarily disable this test
-@Disabled
+//@Disabled
 
 public class JokeResourceTest {
 
@@ -83,7 +83,7 @@ public class JokeResourceTest {
         System.out.println("Testing is server UP");
         given()
                 .when()
-                .get("/jokes")
+                .get("/jokes/all")
                 .then()
                 .statusCode(200);
     }
@@ -95,13 +95,13 @@ public class JokeResourceTest {
         //Gherkin Syntax
         given().
                 when().
-                get("/jokes").
+                get("/jokes/all").
                 then().
                 statusCode(200);
         //Hamcrest matcher
         given().
                 when().
-                get("/jokes").
+                get("/jokes/all").
                 then().assertThat().
                 statusCode(200);
     }
@@ -111,7 +111,7 @@ public class JokeResourceTest {
     public void testGetAll() {
         given()
                 .when().
-                get("/jokes")
+                get("/jokes/all")
                 .then().
                 assertThat()
                 .body("size()", equalTo(2))
@@ -123,16 +123,16 @@ public class JokeResourceTest {
     @Test
     public void demonStrateLogging() {
 
-        given().log().all().when().get("/jokes").then().log().body();
+        given().log().all().when().get("/jokes/all").then().log().body();
 
     }
 
     @Test
     public void contentType() {
         //Gherkin Syntax
-        given().when().get("/jokes").then().contentType(ContentType.JSON);
+        given().when().get("/jokes/all").then().contentType(ContentType.JSON);
         //Hamcrest matcher
-        given().when().get("/jokes").then().assertThat().contentType(ContentType.JSON);
+        given().when().get("/jokes/all").then().assertThat().contentType(ContentType.JSON);
     }
 
 }

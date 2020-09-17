@@ -10,7 +10,10 @@ import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 import utils.EMF_Creator;
 
-
+/**
+ *
+ * Rename Class to a relevant name Add add relevant facade methods
+ */
 public class MemberFacade {
 
     private static MemberFacade instance;

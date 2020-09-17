@@ -85,7 +85,7 @@ public class CarResourceTest {
         System.out.println("Testing is server UP");
         given()
                 .when()
-                .get("/cars")
+                .get("/cars/all")
                 .then()
                 .statusCode(200);
     }
@@ -96,13 +96,13 @@ public class CarResourceTest {
         //Gherkin Syntax
         given().
                 when().
-                get("/cars").
+                get("/cars/all").
                 then().
                 statusCode(200);
         //Hamcrest matcher
         given().
                 when().
-                get("/cars").
+                get("/cars/all").
                 then().assertThat().
                 statusCode(200);
     }
@@ -110,7 +110,7 @@ public class CarResourceTest {
     public void testGetAll() {
         given()
                 .when().
-                get("/cars")
+                get("/cars/all")
                 .then().
                 assertThat()
                 .body("size()", equalTo(2))
@@ -123,9 +123,9 @@ public class CarResourceTest {
     @Test
     public void contentType() {
         //Gherkin Syntax
-        given().when().get("/cars").then().contentType(ContentType.JSON);
+        given().when().get("/cars/all").then().contentType(ContentType.JSON);
         //Hamcrest matcher
-        given().when().get("/cars").then().assertThat().contentType(ContentType.JSON);
+        given().when().get("/cars/all").then().assertThat().contentType(ContentType.JSON);
     }
 
 
